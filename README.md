@@ -80,6 +80,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 For any inquiries or support, please contact:
 
-- **Email**: [your-email@example.com]
-- **GitHub**: [https://github.com/your-username]
+- **Email**: 3004khushigupta@gmail.com,
+- **GitHub**: 2004khushig
 

@@ -12,10 +12,10 @@ A comprehensive system for managing doctor appointments, patient records, and ot
 
 ## Technologies Used
 
-- **Frontend**: [Specify the frontend framework/library, e.g., React, Angular, etc.]
-- **Backend**: [Specify the backend framework, e.g., Node.js, Django, etc.]
-- **Database**: [Specify the database, e.g., MySQL, MongoDB, etc.]
-- **Other Tools**: [List any other tools or libraries used, e.g., Docker, Redis, etc.]
+- **Frontend**: React
+- **Backend**: Node.js, Django
+- **Database**: MongoDB
+- **Other Tools**: Express
 
 ## Installation
 
@@ -80,6 +80,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 For any inquiries or support, please contact:
 
-- **Email**: [your-email@example.com]
-- **GitHub**: [https://github.com/your-username]
+- **Email**: 3004khushigupta@gmail.com,
+- **GitHub**: 2004khushig
 

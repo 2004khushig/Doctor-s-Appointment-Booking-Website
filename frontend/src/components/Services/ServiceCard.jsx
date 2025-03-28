@@ -23,6 +23,7 @@ const ServiceCard = ({ item }) => {
                     style={{ borderColor: bgColor }}
                 >
                     <BsArrowRight className="group-hover:text-white w-6 h-5" style={{ color: textColor }} />
+                    
                 </Link>
             </div>
         </div>

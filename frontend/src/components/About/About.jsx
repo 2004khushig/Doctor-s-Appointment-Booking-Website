@@ -5,7 +5,7 @@ import {Link} from "react-router-dom"
 
 const About = () => {
     return (
-        <div>
+        <div className=" ml-10 mr-10">
             <section>
                 <div className="container">
                     <div className="flex justify-between gap-[50px] lg:gap-[130px] xl:gap-0 flex-col lg:flex-row">

@@ -5,6 +5,7 @@ import heroImg03 from "../assets/images/hero-img03.png";
 import icon01 from "../assets/images/icon01.png"
 import icon02 from "../assets/images/icon02.png"
 import icon03 from "../assets/images/icon03.png"
+import faqImg from '../assets/images/faq-img.png'
 import featureImg from "../assets/images/feature-img.png"
 import videoIcon from "../assets/images/video-icon.png"
 import avatarIcon from "../assets/images/avatar-icon.png"
@@ -12,6 +13,9 @@ import { Link } from "react-router-dom"
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About.jsx";
 import ServiceList from "../components/Services/ServiceList.jsx";
+import DoctorList from "../components/Doctors/DoctorList.jsx";
+import FaqList from "../components/Faq/FaqList.jsx";
+import Testimonial from "../components/Testimonial/Testimonial.jsx";
 
 
 
@@ -148,67 +152,100 @@ const Home = () => {
 
             {/*===========feature section================== */}
             <section>
-    <div className="container mx-auto">
-        <div className="flex items-center justify-start flex-col lg:flex-row gap-10 pl-20">
-            {/* Text Section */}
-            <div className="flex-1 text-left">
-                <h2 className="heading mb-3">
-                    Get virtual treatment <br /> anytime.
-                </h2>
-                <ul className="pl-7">
-                    <li className="text__para">1. Schedule the appointment directly.</li>
-                    <li className="text__para">2. Select your physician and directly contact their office.</li>
-                    <li className="text__para">3. Filter out doctors who are taking new patients and schedule your appointment at your convenient time.</li>
-                </ul>
-                <Link to="/">
-                    <button className="btn">Learn More</button>
-                </Link>
-            </div>
-
-            {/* Image + Info Box */}
-            <div className="relative z-10 flex-1 flex justify-start">
-                <img src={featureImg} className="w-full max-w-[500px]" alt="" />
-
-                {/* Overlapping Info Box (Starts Before White Space, Ends Within Image) */}
-                <div className="w-[220px] lg:w-[248px] bg-white absolute bottom-[1%] left-[-20%] z-20 p-2 pb-3 lg:pt-4 lg:px-4 lg:pb-[26px] rounded-[10px] shadow-lg">
-                    {/* Date, Time & Video Icon in One Row */}
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-[6px] lg:gap-3">
-                            <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-headingColor font-[600]">
-                                Tue, 25
-                            </p>
-                            <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-textColor font-[400]">
-                                10:00 AM
-                            </p>
+                <div className="container mx-auto">
+                    <div className="flex items-center justify-start flex-col lg:flex-row gap-10 pl-20">
+                        {/* Text Section */}
+                        <div className="flex-1 text-left">
+                            <h2 className="heading mb-3">
+                                Get virtual treatment <br /> anytime.
+                            </h2>
+                            <ul className="pl-7">
+                                <li className="text__para">1. Schedule the appointment directly.</li>
+                                <li className="text__para">2. Select your physician and directly contact their office.</li>
+                                <li className="text__para">3. Filter out doctors who are taking new patients and schedule your appointment at your convenient time.</li>
+                            </ul>
+                            <Link to="/">
+                                <button className="btn">Learn More</button>
+                            </Link>
                         </div>
 
-                        {/* Video Icon */}
-                        <span className="w-5 h-5 lg:w-[34px] lg:h-[34px] flex items-center justify-center bg-yellowColor rounded">
-                            <img src={videoIcon} alt="" className="w-3 h-3 lg:w-5 lg:h-5" />
-                        </span>
-                    </div>
+                        <div className="relative z-10 flex-1 flex justify-start">
+                            <img src={featureImg} className="w-full max-w-[500px]" alt="" />
 
-                    {/* Consultation Tag */}
-                    <div className="w-[65px] lg:w-[96px] bg-[#CCF0F3] py-1 px-2 lg:py-[6px] lg:px-[10px] text-[8px] leading-[8px] lg:text-[12px] lg:leading-4 text-irisBlueColor font-[500] mt-2 lg:mt-4 rounded-full">
-                        Consultation
-                    </div>
+                            <div className="w-[220px] lg:w-[248px] bg-white absolute bottom-[1%] left-[-20%] z-20 p-2 pb-3 lg:pt-4 lg:px-4 lg:pb-[26px] rounded-[10px] shadow-lg">
 
-                    {/* Doctor's Info */}
-                    <div className="flex items-center gap-[6px] lg:gap-[10px] mt-2 lg:mt-[18px]">
-                        <img src={avatarIcon} alt="" />
-                        <h4 className="text-[10px] leading-3 lg:text-[16px] lg:leading-[22px] font-[700] text-headingColor">
-                            Timothy Clifford
-                        </h4>
+                                <div className="flex justify-between items-center">
+                                    <div className="flex items-center gap-[6px] lg:gap-3">
+                                        <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-headingColor font-[600]">
+                                            Tue, 25
+                                        </p>
+                                        <p className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-textColor font-[400]">
+                                            10:00 AM
+                                        </p>
+                                    </div>
+                                    <span className="w-5 h-5 lg:w-[34px] lg:h-[34px] flex items-center justify-center bg-yellowColor rounded">
+                                        <img src={videoIcon} alt="" className="w-3 h-3 lg:w-5 lg:h-5" />
+                                    </span>
+                                </div>
+                                <div className="w-[65px] lg:w-[96px] bg-[#CCF0F3] py-1 px-2 lg:py-[6px] lg:px-[10px] text-[8px] leading-[8px] lg:text-[12px] lg:leading-4 text-irisBlueColor font-[500] mt-2 lg:mt-4 rounded-full">
+                                    Consultation
+                                </div>
+                                <div className="flex items-center gap-[6px] lg:gap-[10px] mt-2 lg:mt-[18px]">
+                                    <img src={avatarIcon} alt="" />
+                                    <h4 className="text-[10px] leading-3 lg:text-[16px] lg:leading-[22px] font-[700] text-headingColor">
+                                        Timothy Clifford
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
+            </section>
+            {/*===========feature section end=================*/}
+            {/*===========doctor's section=================*/}
+            <section>
+                <div className="container">
+                    <div className="xl:w-[470px] mx-auto">
+                        <h2 className="heading text-center">Meet Our Doctors</h2>
+                        <p className="text__para text-center mt-4">
+                            Our system connect doctors from all around the world with expertise in different fields. You can find the best doctor for your needs and schedule an appointment with them.
+                        </p>
+                    </div>
+                    <DoctorList />
+                </div>
+            </section>
+            {/*===========doctor's section end=================*/}
 
+            {/*===========faq section=================*/}
+            <section>
+                <div className="container">
+                    <div className="flex justify-between gap-[50px] lg:gap-0">
+                        <div className="w-[40%] hidden md:block ml-20">
+                            <img src={faqImg} alt="" />
+                        </div>
+                        <div className="w-full md:w-1/2 mt-[50px]">
+                            <h2 className="heading">Frequent questions asked by our patients</h2>
+                            <FaqList />
 
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/*===========faq section end=================*/}
+            {/*===========testimonial=================*/}
 
-
+            <section>
+                <div className="container">
+                <div className="xl:w-[480px] mx-auto">
+                        <h2 className="heading text-center">What Our Patients Say</h2>
+                        <p className="text__para text-center mt-4">
+                            Here are some personalized views and feedback from our patients. We are always happy to hear from you. Their feedback is very important for us to improve our services and provide you with the best experience.
+                        </p>
+                    </div>
+                    <Testimonial/>
+                </div>
+            </section>
+            {/*===========testimonial end=================*/}
         </div>
     );
 };

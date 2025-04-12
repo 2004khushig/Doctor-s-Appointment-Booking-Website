@@ -25,6 +25,7 @@ body{
 .swiper{
   padding-bottom: 70px !important;
 }
+
 .swiper-slide.swiper-slide-next{
   background: #1f355a;
   border-radius: 12px;
@@ -34,6 +35,10 @@ body{
 .swiper-slide.swiper-slide-next p{
   color:#fff !important
 }
+.Toastify {
+  padding: 0 !important;
+}
+
 .swiper-pagination{
   top:90% !important;
 }

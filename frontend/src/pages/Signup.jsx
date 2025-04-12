@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
 import avatar from "../assets/images/doctor-img01.png";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import uploadImageToCloudinary from "../utils/uploadCloudinary";
+import {BASE_URL} from "../config";
+import {toast} from "react-toastify";
+import HashLoader from 'react-spinners/HashLoader'
 
 const Signup = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,20 +19,53 @@ const Signup = () => {
     gender: "male",
     photo: null,
   });
+  const navigate=useNavigate();
 
-  const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "photo") {
-      setFormData({ ...formData, photo: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+  
+  const handleTextInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can handle form submission here
-    console.log("Form submitted:", formData);
+ 
+  const handleFileInputChange = async event => {
+    const file = event.target.files[0];
+    const data=await uploadImageToCloudinary(file);
+    // console.log(data);
+    setPreviewURL(data.url);
+    setSelectedFile(data.url);
+    setFormData({...formData, photo: data.url});
+
+  };
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    setLoading(true);
+    try{
+      const res=await fetch(`${BASE_URL}/auth/register`,{
+        method:'post',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(formData)
+      })
+      const {message}=await res.json();
+      if(!res.ok){
+        throw new Error(message);
+
+      }
+      setLoading(false)
+      toast.success(message)
+      navigate("/login")
+
+    }
+    catch(err){
+      toast.error(err.message)
+      setLoading(false)
+    }
   };
 
   return (
@@ -36,7 +76,11 @@ const Signup = () => {
             {/* Left image section */}
             <div className="hidden lg:block bg-primaryColor rounded-l-lg">
               <figure className="rounded-l-lg">
-                <img src={signupImg} alt="Signup Illustration" className="w-full rounded-l-lg" />
+                <img
+                  src={signupImg}
+                  alt="Signup Illustration"
+                  className="w-full rounded-l-lg"
+                />
               </figure>
             </div>
 
@@ -53,7 +97,7 @@ const Signup = () => {
                     placeholder="Full Name"
                     name="name"
                     value={formData.name}
-                    onChange={handleInputChange}
+                    onChange={handleTextInputChange}
                     className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   />
                 </div>
@@ -64,7 +108,7 @@ const Signup = () => {
                     placeholder="Email"
                     name="email"
                     value={formData.email}
-                    onChange={handleInputChange}
+                    onChange={handleTextInputChange}
                     className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   />
                 </div>
@@ -75,7 +119,7 @@ const Signup = () => {
                     placeholder="Password"
                     name="password"
                     value={formData.password}
-                    onChange={handleInputChange}
+                    onChange={handleTextInputChange}
                     className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
                   />
                 </div>
@@ -86,7 +130,7 @@ const Signup = () => {
                     <select
                       name="role"
                       value={formData.role}
-                      onChange={handleInputChange}
+                      onChange={handleTextInputChange}
                       className="ml-2 text-textColor font-semibold text-[15px] leading-7 px-4 py-2 focus:outline-none rounded-md"
                     >
                       <option value="patient">Patient</option>
@@ -99,7 +143,7 @@ const Signup = () => {
                     <select
                       name="gender"
                       value={formData.gender}
-                      onChange={handleInputChange}
+                      onChange={handleTextInputChange}
                       className="ml-2 text-textColor font-semibold text-[15px] leading-7 px-4 py-2 focus:outline-none rounded-md"
                     >
                       <option value="male">Male</option>
@@ -110,9 +154,9 @@ const Signup = () => {
                 </div>
 
                 <div className="mb-5 flex items-center gap-3">
-                  <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
-                    <img src={avatar} alt="Avatar" className="w-full rounded-full" />
-                  </figure>
+                  {selectedFile && <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                    <img src={previewURL} alt="Avatar" className="w-full rounded-full" />
+                  </figure>}
 
                   <div className="relative w-[130px] h-[50px]">
                     <input
@@ -120,7 +164,7 @@ const Signup = () => {
                       name="photo"
                       id="customFile"
                       accept=".jpg, .png"
-                      onChange={handleInputChange}
+                      onChange={handleFileInputChange}
                       className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
                     />
                     <label
@@ -134,10 +178,11 @@ const Signup = () => {
 
                 <div className="mt-7">
                   <button
+                  disabled={loading && true}
                     type="submit"
                     className="w-full bg-primaryColor text-white text-[18px] leading-[20px] rounded-md px-4 py-3"
                   >
-                    Sign Up
+                    {loading?<HashLoader size={35} color='#ffffff'/>:"Sign Up"}
                   </button>
                 </div>
 

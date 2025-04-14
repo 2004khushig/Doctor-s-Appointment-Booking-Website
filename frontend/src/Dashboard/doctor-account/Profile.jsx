@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
+import uploadImageToCloudinary from '../../utils/uploadCloudinary';
+import { BASE_URL,token } from '../../config';
+import { toast } from 'react-toastify';
 
-const Profile = () => {
+const Profile = ({doctorData}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     bio: '',
     gender: '',
+    password:'',
     specialization: '',
     ticketPrice: 0,
     qualifications: [{ startingDate: '', endingDate: '', degree: '', university: '' }],
@@ -16,25 +20,55 @@ const Profile = () => {
     about: '',
     photo: null
   });
+  useEffect(()=>{
+    setFormData({
+      name:doctorData?.name,
+      email:doctorData?.email,
+      phone:doctorData?.phone,
+      bio:doctorData?.bio,
+      gender:doctorData.gender,
+      password:doctorData?.password,
+      specialization:doctorData?.specialization,
+      ticketPrice:doctorData?.ticketPrice,
+      qualifications:doctorData?.qualifications,
+      experiences:doctorData?.experiences,
+      timeSlots:doctorData?.timeSlots,
+      about:doctorData?.about,
+      photo:doctorData?.photo,
+    })
+  },[doctorData])
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileInputChange = (event) => {
+  const handleFileInputChange = async event => {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({ ...prev, photo: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
+    const data=await uploadImageToCloudinary(file)
+    setFormData({...formData,photo:data?.url})
   };
 
-  const updateProfileHandler = async (e) => {
+  const updateProfileHandler = async e => {
     e.preventDefault();
-    // Add submit logic
+    try{
+      const res=await fetch(`${BASE_URL}/doctors/${doctorData._id}`,{
+      method:"PUT",
+      headers:{
+        "content-type":"application/json",
+        Authorization:`Bearer ${token}`,
+      },
+      body:JSON.stringify(formData)
+
+    });
+    const result=await res.json();
+    if(!res.ok){
+      throw Error(result.message);
+    }
+    toast.success(result.message);
+  }
+    catch(err){
+      toast.error(err.message);
+    }
   };
 
   const addItem = (key, item) => {
